@@ -7,11 +7,15 @@ import ("flag")
 //looks for git repos
 func scan(path string){
 
+    print("scanning")
+
 }
 
 
 //generates git contribution graph
 func stats(email string){
+
+    print("stats")
 
 }
 
