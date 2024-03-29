@@ -19,5 +19,19 @@ func stats(email string){
 
 func main(){
 
+    var folder string
+    var email string
+
+    flag.StringVar(&folder, "add","", "add a folder to scan for repos")
+    flag.StringVar(&email, "email","your@email.com","the email to scan")
+
+    flag.Parse()
+
+    if folder != ""{
+        scan(folder)
+        return
+    }
+
+    stats(email)
 
 }
