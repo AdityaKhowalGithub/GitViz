@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
+	"os/user"
 	"strings"
 )
 
@@ -15,7 +17,7 @@ func scan(folder string){
     //store paths in a file
 
 
-    repos := scanFolderRecursive(folder)
+    repos := scanFolder(make([]string, 0),folder)
 
     filepath := getDotFilePath()
 
@@ -28,9 +30,7 @@ func scan(folder string){
 }
 
 
-func scanFolderRecursive(folder string){
 
-}
 
 func scanFolder(folders []string, folder string) []string{
     folder = strings.TrimSuffix(folder, "/")
@@ -74,4 +74,54 @@ func scanFolder(folders []string, folder string) []string{
 }
 
 
+func getDotFilePath() string{
 
+    usr, err := user.Current()
+    if err != nil{
+        log.Fatal(err)
+    }
+
+    dotFile := usr.HomeDir+ "/.gogitlocalstats"
+
+    return dotFile
+
+}
+
+func save(filepath string, repo []string) {
+    oldRepos := filetoSlice(filepath)
+    repos := joinSlices(repo, oldRepos)
+    SlicetoFile(repos, filepath)
+}
+
+
+func filetoSlice(filepath string) []string{
+    f := openFile(filepath)
+    defer f.Close()
+    var lines []string
+
+    scanner := bufio.NewScanner(f)
+    for scanner.Scan(){
+        lines 
+    }
+}
+func openFile(filePath string) *os.File {
+    f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, 0755)
+    if err != nil {
+        if os.IsNotExist(err) {
+            // file does not exist
+            _, err = os.Create(filePath)
+            if err != nil {
+                panic(err)
+            }
+        } else {
+            // other error
+            panic(err)
+        }
+    }
+
+    return f
+}
+
+func SlicetoFile(repos []string, filepath string){}
+
+func joinSlices(new []string, old []string) []string{}
