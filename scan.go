@@ -1,12 +1,13 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"log"
-	"os"
-	"os/user"
-	"strings"
+    "bufio"
+    "fmt"
+    "log"
+    "os"
+    "os/user"
+    "strings"
+    "io"
 )
 
 func scan(folder string){
@@ -101,8 +102,14 @@ func filetoSlice(filepath string) []string{
 
     scanner := bufio.NewScanner(f)
     for scanner.Scan(){
-        lines 
+        lines = append(lines, scanner.Text()) 
     }
+    if err := scanner.Err(); err != nil {
+        if err != io.EOF {
+            panic(err)
+        }
+    }
+    return lines
 }
 func openFile(filePath string) *os.File {
     f, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, 0755)
@@ -122,6 +129,27 @@ func openFile(filePath string) *os.File {
     return f
 }
 
-func SlicetoFile(repos []string, filepath string){}
+func SlicetoFile(repos []string, filepath string){
+    content := strings.Join(repos, "\n")
+    os.WriteFile(filepath, []byte(content), 0755) 
 
-func joinSlices(new []string, old []string) []string{}
+}
+
+func sliceContains(slice []string, value string) bool {
+    for _, v := range slice {
+        if v == value {
+            return true
+        }
+    }
+    return false
+}
+
+func joinSlices(neww []string, old []string) []string{
+    for _, i := range neww{
+        if !sliceContains(old, i){
+            old = append(old, i)
+        }
+    } 
+
+    return old
+}

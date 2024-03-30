@@ -5,11 +5,11 @@ import ("flag")
 //takes in a path
 //crawls path and all subfolders
 //looks for git repos
-func scan(path string){
+// func scan(path string){
 
-    print("scanning")
+    // print("scanning")
 
-}
+// }
 
 
 //generates git contribution graph
