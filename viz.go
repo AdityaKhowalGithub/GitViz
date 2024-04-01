@@ -13,11 +13,11 @@ import ("flag")
 
 
 //generates git contribution graph
-func stats(email string){
+// func stats(email string){
 
-    print("stats")
+    // print("stats")
 
-}
+// }
 
 
 
